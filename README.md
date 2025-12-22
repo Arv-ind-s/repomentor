@@ -61,7 +61,7 @@ graph TD
 *   **Static Analysis:**
     *   `ast` (Standard Lib) - For parsing Python abstract syntax trees.
     *   `networkx` - For building and analyzing file dependency graphs.
-*   **Generative AI:** `litellm` - Interface for OpenAI/Gemini/Anthropic models.
+*   **Generative AI:** `google-generativeai` - Direct integration with Google's Gemini Models.
 *   **Visualization:** `graphviz` / `streamlit-agraph` - For rendering architecture diagrams.
 
 ---

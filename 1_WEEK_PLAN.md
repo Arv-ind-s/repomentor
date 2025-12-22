@@ -1,109 +1,201 @@
-# RepoMentor: 1-Week Implementation Plan (Streamlit Edition)
+# RepoMentor: 1-Week Implementation Plan (SDLC & Testing Focused)
 
-This document outlines a revised 7-day strategy to build **RepoMentor** as a Streamlit web application.
+This document serves as the **Single Source of Truth** for the development of RepoMentor. It follows a rigorous Software Development Life Cycle (SDLC) approach, prioritizing robustness, testing, and architectural integrity.
 
-**Core User Flow:**
-1.  User opens the RepoMentor Streamlit app.
-2.  User pastes a GitHub Repository URL.
-3.  System clones/fetches the repo.
-4.  System analyzes the code (AST + LLM).
-5.  System displays/allows download of:
-    *   Human-readable Documentation (Markdown).
-    *   AI-Code Context (XML/JSON).
-
----
-
-## 🏗 System Architecture
-
-### Core Components
-1.  **Web Interface (`ui/`)**: Built with **Streamlit**. Handles user input (URL) and displays results.
-2.  **Repo Ingestion (`ingest/`)**:
-    *   Uses `GitPython` or subprocess to clone repositories to a temporary directory.
-    *   Handles cleanup of temporary files after analysis.
-3.  **Parser & Analyzer (`analysis/`)**:
-    *   AST extraction (Classes, Functions, Docstrings).
-    *   Dependency graph building.
-4.  **Knowledge Core (`core/`)**:
-    *   LLM Integration (Gemini/OpenAI) for summarizing code and architecture.
-5.  **Generators (`generators/`)**:
-    *   Outputs for the UI (interactive view) and downloadable files (zip/md).
+**Progress Tracking:**
+- [ ] Day 1: Requirements, Architecture & Foundation
+- [ ] Day 2: Ingestion Core & Parsing Engine
+- [ ] Day 3: Static Analysis & Knowledge Graph
+- [ ] Day 4: LLM Intelligence Layer
+- [ ] Day 5: Frontend Implementation & Integration
+- [ ] Day 6: Comprehensive Testing & QA
+- [ ] Day 7: Documentation, Polish & Release
 
 ---
 
-## 📅 Daily Schedule
+## 📅 Daily Detailed Breakdown
 
-### Day 1: Foundation, Git & Streamlit Setup
-**Objective:** Create the basic UI and ability to clone a repo from a URL.
+### Day 1: Requirements, Architecture & Foundation
+**Phase:** Planning & Design
+**Focus:** Establishing a solid structural foundation to prevent technical debt.
 
-*   **Implementation:**
-    *   **Project Setup:** Poetry/requirements.txt (add `streamlit`, `gitpython`).
-    *   **UI Skeleton:** Create `app.py` with a text input field for "GitHub URL" and a "Analyze" button.
-    *   **Git Service:** Implement a module to `git clone <url>` into a temp folder (using `tempfile` lib).
-    *   **Persistence:** Ensure the cloned repo persists for the session duration.
-*   **Deliverable:** A running Streamlit app where I can paste a URL, and it confirms "Repository cloned successfully to /tmp/xyz".
-
-### Day 2: AST Parsing & Structural Analysis
-**Objective:** Parse the cloned code into structured data.
-
-*   **Implementation:**
-    *   **Walker:** Traverse the cloned local folder (respecting `.gitignore` if present).
-    *   **AST Visitor:** Extract defined classes, functions, and global constants from Python files.
-    *   **Display:** Show a rudimentary file tree in the Streamlit sidebar to prove parsing works.
-*   **Deliverable:** The UI displays a list of files found in the repo and their basic statistics (line count, number of functions).
-
-### Day 3: Dependency Graph & "Knowledge Core"
-**Objective:** Understand how files relate to each other.
-
-*   **Implementation:**
-    *   **Import Parsing:** Analyze `import` statements to build a dependency graph.
-    *   **Visualization:** Use `streamlit-agraph` or `graphviz` to render a basic dependency graph in the browser.
-    *   **Topology:** Identify "Core" vs "Utility" modules based on connectivity.
-*   **Deliverable:** A Visual Graph in the UI showing the structure of the cloned repo.
-
-### Day 4: LLM Integration (The Brain)
-**Objective:** Connect the structured data to an LLM to generate explanations.
-
-*   **Implementation:**
-    *   **LLM Service:** Integration with `litellm` (or direct API) to handle prompts.
-    *   **Prompting Strategy:** Run summaries for each file using the AST data (signatures + docstrings) as context to save tokens.
-    *   **Progress UI:** Add a progress bar in Streamlit to show "Analyzing file X of Y...".
-*   **Deliverable:** Valid LLM summaries generated for each file in the repo.
-
-### Day 5: Artifact Generation (The Output)
-**Objective:** Generate the actual deliverables (Human Docs & AI Context).
-
-*   **Implementation:**
-    *   **Human Doc Generator:** Compile file summaries and architecture info into a structured Markdown string.
-    *   **AI Context Generator:** Create the compressed JSON representation.
-    *   **UI Integration:** Add tabs in Streamlit: "Read Docs" (rendered Markdown) and "AI Context" (JSON view).
-*   **Deliverable:** User can read the generated docs directly in the web app.
-
-### Day 6: Download & "Chat with Repo"
-**Objective:** Allow exporting artifacts and asking follow-up questions.
-
-*   **Implementation:**
-    *   **Download Buttons:** "Download README.md", "Download Context.json".
-    *   **Chat Interface:** Use `st.chat_message` to create a Q&A section.
-    *   **Context Injection:** Inject the newly generated "AI Context" into the chat session's system prompt so the LLM can answer questions about the specific repo.
-*   **Deliverable:** A full end-to-end loop: Clone -> Analyze -> Download -> Chat.
-
-### Day 7: Polish, Error Handling & Deployment Prep
-**Objective:** Make it robust and pretty.
+*   **Objectives:**
+    *   Finalize system architecture and data flow.
+    *   Set up the development environment and CI/CD foundations.
+    *   Define core data models (schema) for the application.
 
 *   **Tasks:**
-    *   **Error Handling:** Handle private repos (auth errors), invalid URLs, or empty repos.
-    *   **Cleanup:** robust deletion of temp folders to prevent disk bloat.
-    *   **Styling:** Make the Streamlit app look professional (layout, typography).
-    *   **Demo:** Prepare a demo video using a popular open-source repo (e.g., `requests` or `flask`).
-*   **Deliverable:** A stable v0.1.0 ready for demo.
+    *   [ ] **Project Scaffolding:** Initialize git, Poetry/pip, and directory structure (`/core`, `/ui`, `/tests`, `/docs`).
+    *   [ ] **Architecture Design:** Create a detailed Mermaid diagram in `ARCHITECTURE.md` showing data flow between UI, Ingest, Parser, and LLM modules.
+    *   [ ] **Data Modeling:** Define Pydantic models for `Repository`, `FileNode`, `FunctionNode`, `ClassNode`, and `DependencyGraph`.
+    *   [ ] **Tooling Setup:** Configure `pytest` for testing, `ruff` for linting, and `pre-commit` hooks.
+    *   [ ] **Tech Stack Freeze:** Confirm versions for Streamlit, GitPython, NetworkX, and **Gemini API SDK (`google-generativeai`)**.
+
+*   **Testing Strategy:**
+    *   *Verification:* Ensure development environment installs correctly on a fresh isolation (venv).
+    *   *Unit:* Write initial "sanity check" tests for the project structure.
+
+*   **Deliverables:**
+    *   `ARCHITECTURE.md` (Diagrams + Text).
+    *   `requirements.txt` / `pyproject.toml` (Locked versions).
+    *   Initial Directory Structure.
 
 ---
 
-## 🛠 Tech Stack
+### Day 2: Ingestion Core & Parsing Engine
+**Phase:** Backend Development (Component Level)
+**Focus:** Reliable file handling and accurate code extraction.
 
-*   **Frontend:** `Streamlit`
-*   **Core Logic:** Python 3.10+
-*   **Git Operations:** `GitPython`
-*   **Analysis:** `ast`, `networkx`
-*   **Visualization:** `graphviz` or `streamlit-agraph`
-*   **LLM Client:** `litellm`
+*   **Objectives:**
+    *   Build robust `IngestService` to clone/handle git repositories securely.
+    *   Build `ParserService` to extract AST data from Python files.
+
+*   **Tasks:**
+    *   [ ] **Ingestion Module:** Implement `GitIngestor` class using `GitPython`. Handle cloning to `tempfile`, standardizing paths, and cleanup (context manager).
+    *   [ ] **File Walker:** Implement logic to traverse directories, respecting `.gitignore` recursively.
+    *   [ ] **AST Parser:** Implement `PythonParser` using the `ast` library.
+        *   Extract: Class names, Function signatures, Docstrings, Global variables, Imports.
+        *   Metrics: Line counts, Cyclomatic complexity (optional).
+    *   [ ] **Data Mapping:** Map raw AST data to the Pydantic models defined on Day 1.
+
+*   **Testing Strategy (TDD Approach recommended):**
+    *   *Unit (Ingestion):* Mock `git.Repo.clone_from` to test success and failure (e.g., auth error) scenarios without hitting GitHub.
+    *   *Unit (Parser):* Create sample python strings/files as fixtures. Assert that `PythonParser` correctly extracts functions/classes from these fixtures.
+
+*   **Deliverables:**
+    *   `core/ingest.py` & `core/parser.py`.
+    *   Passing test suite: `tests/test_ingest.py`, `tests/test_parser.py`.
+
+---
+
+### Day 3: Static Analysis & Knowledge Graph
+**Phase:** Backend Development (Logic Level)
+**Focus:** Understanding the relationships between code components.
+
+*   **Objectives:**
+    *   Build a visualizable dependency graph.
+    *   Identify key modules vs. utilities.
+
+*   **Tasks:**
+    *   [ ] **Dependency Resolver:** Analyze import statements extracted by the Parser to link nodes.
+        *   Resolve relative imports (`from .utils import x`) to absolute paths.
+        *   Resolve 3rd party vs. local imports.
+    *   [ ] **Graph Construction:** Use `NetworkX` to build a directed graph (File/Module level nodes).
+    *   [ ] **Graph Metrics:** Calculate centrality to determine "important" files (for LLM context prioritization).
+    *   [ ] **Visualization Data:** Export graph data to a format compatible with `streamlit-agraph` or `graphviz`.
+
+*   **Testing Strategy:**
+    *   *Unit (Graph):* Create a mock project structure with known dependencies (A imports B). Assert the graph correctly has an edge A->B.
+    *   *Integration:* Feed the output of `ParserService` into `GraphService` to ensure data compatibility.
+
+*   **Deliverables:**
+    *   `core/graph.py` & `core/analysis.py`.
+    *   `tests/test_graph.py`.
+
+---
+
+### Day 4: LLM Intelligence Layer
+**Phase:** Backend Development (AI Integration)
+**Focus:** Prompt Engineering and Context Management.
+
+*   **Objectives:**
+    *   Integrate LLM client (LiteLLM) for code summarization.
+    *   Develop context-aware prompts.
+
+*   **Tasks:**
+    *   [ ] **LLM Service:** Integration with `google-generativeai` (Gemini API). Implement error handling for quotas/rate limits.
+    *   [ ] **Prompt Templates:** Design prompts for:
+        *   `File Summarization`: "Explain this code file..." (Optimize for Gemini 1.5 Flash).
+        *   `Architecture Summary`: "Based on these file summaries, explain the whole..."
+    *   [ ] **Context Optimization:** Leverage Gemini's large context window (1M+ tokens) to potentially process entire files at once, reducing the need for aggressive truncation.
+    *   [ ] **Batch Processing:** Implement async processing (optional) or progress tracking for analyzing multiple files.
+
+*   **Testing Strategy:**
+    *   *Unit (LLM):* **CRITICAL** - Mock the LLM API calls. Do not test against real APIs in CI/CD. Verify the prompt construction logic.
+    *   *Manual:* Run against a real (small) repo to verify prompt quality and token usage.
+
+*   **Deliverables:**
+    *   `core/llm.py`.
+    *   `tests/test_llm_prompts.py`.
+
+---
+
+### Day 5: Frontend Implementation & Integration
+**Phase:** Frontend Development & System Integration
+**Focus:** User Experience and wiring backend to frontend.
+
+*   **Objectives:**
+    *   Build the Streamlit Interface.
+    *   Connect UI events to Backend Services.
+
+*   **Tasks:**
+    *   [ ] **State Management:** Design `st.session_state` schema to hold the `Repository` object, `AnalysisResults`, and `ChatHistory`.
+    *   [ ] **UI Layout:**
+        *   Sidebar: Configuration (**Gemini API Key** input, Model selection e.g., `gemini-1.5-flash`) + File Tree.
+        *   Main Area: Repo URL Input -> Analysis Progress Bar -> Tabs Results.
+    *   [ ] **Visualization:** Embed the dependency graph component.
+    *   [ ] **Artifact Display:** Render the Markdown summaries and JSON context viewer.
+    *   [ ] **Download Handlers:** Buttons to download generated assets as Zip/Text.
+
+*   **Testing Strategy:**
+    *   *Manual (UI):* Verify state persistence (does data vanish on refresh?). Verify layout responsiveness.
+    *   *Integration:* "Happy Path" test - Paste URL -> Click Analyze -> See Results appear.
+
+*   **Deliverables:**
+    *   `app.py` (Main entry point).
+    *   `ui/components.py` (Reusable UI blocks).
+
+---
+
+### Day 6: Comprehensive Testing & QA
+**Phase:** Quality Assurance
+**Focus:** Reliability, Edge Cases, and End-to-End Validation.
+
+*   **Objectives:**
+    *   Ensure system handles real-world complexity and failures gracefully.
+    *   Achieve high confidence for release.
+
+*   **Tasks:**
+    *   [ ] **Unit Test Expansion:** improved coverage for edge cases (empty files, syntax errors in target code, binary files).
+    *   [ ] **Mocked E2E Tests:** Simulate a full user flow in a test script (Initialize System -> Ingest Mock Repo -> Analyze -> Generate Output) without using the UI.
+    *   [ ] **Error Handling Audit:** Review all `try/except` blocks. Ensure the UI shows friendly errors for:
+        *   Invalid URL.
+        *   Private Repo (404/403).
+        *   API Key missing/invalid.
+    *   [ ] **Performance Check:** Measure time-to-analyze for a medium-sized repo. Optimization if needed.
+
+*   **Testing Strategy:**
+    *   **The "Gauntlet":** Run the tool against 3 diverse open-source repos:
+        1.  *Small:* `requests` (Standard structure).
+        2.  *Messy:* A tailored "bad code" repo (Circular imports, bad encoding).
+        3.  *Large:* `flask` (Limit test).
+
+*   **Deliverables:**
+    *   Full Test Report.
+    *   Fixed methodologies for any discovered bugs.
+
+---
+
+### Day 7: Documentation, Polish & Release
+**Phase:** Deployment & Handoff
+**Focus:** Usability and Professionalism.
+
+*   **Objectives:**
+    *   Finalize user-facing and developer documentation.
+    *   Polish the visual design.
+
+*   **Tasks:**
+    *   [ ] **Documentation:**
+        *   `README.md`: Update with screenshots and "How to run".
+        *   `DEVELOPMENT.md`: Guide for future contributors.
+        *   `USER_GUIDE.md`: Instructions on interpreting the graphs/summaries.
+    *   [ ] **UI Polish:** Consistent styling (CSS injection if needed), tooltips for complex buttons.
+    *   [ ] **Demo Creation:** Record the specific demo workflow for the final showcase.
+    *   [ ] **Code Cleanup:** Remove all `print` debug statements, unused imports, and `TODO` comments.
+
+*   **Testing Strategy:**
+    *   *Final Acceptance Test:* Run the Demo scenario from scratch on a clean machine.
+
+*   **Deliverables:**
+    *   Release Candidate v1.0.
+    *   Demo Video/Screenshots.
