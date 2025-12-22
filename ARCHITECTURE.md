@@ -11,12 +11,12 @@ graph TD
     UI -->|Trigger| Ingest[Ingestion Service]
     
     subgraph Core System
-        Ingest -->|Clone| FS[FileSystem (Temp)]
+        Ingest -->|Clone| FS["FileSystem (Temp)"]
         FS -->|Read| Parser[AST Parser]
         Parser -->|Extract Nodes| Graph[Dependency Graph Builder]
         
-        Parser & Graph -->|Structured Data| Models[Data Models (Pydantic)]
-        Models -->|Context| LLM[LLM Service (Gemini)]
+        Parser & Graph -->|Structured Data| Models["Data Models (Pydantic)"]
+        Models -->|Context| LLM["LLM Service (Gemini)"]
     end
     
     LLM -->|Summaries| Artifacts[Artifact Generator]
