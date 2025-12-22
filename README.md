@@ -1,112 +1,100 @@
 # RepoMentor 🧠📚
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![Status: Active Development](https://img.shields.io/badge/status-active_development-orange.svg)]()
+<div align="center">
+  <h3>AI-Powered Code Comprehension & Safe AI Context for Modern Development Teams</h3>
+  <p>Making every codebase understandable — for humans and AI</p>
 
-**Making every codebase understandable — for humans and AI.**
-
-RepoMentor is a GenAI-driven platform that treats source code as the single source of truth. It analyzes your repository's structure and logic (via AST) to generate high-fidelity documentation for developers and safety-first context for AI coding tools.
-
-[The Problem](#the-problem) • [Key Features](#key-features) • [Architecture](#architecture) • [Getting Started](#getting-started) • [Use Cases](#use-cases)
-
----
-
-## 🚀 The Core Innovation: Two-Layer Understanding
-
-Unlike tools that simply summarize files, RepoMentor builds a **Knowledge Core** directly from code structure to serve two distinct audiences:
-
-### 1. Human Knowledge Layer
-* **On-Demand Docs:** Fresh documentation that never goes out of date.
-* **Multi-Level Walkthroughs:** Explanations ranging from high-level architecture to line-by-line logic.
-* **Grounded Q&A:** A conversational interface that answers questions based *only* on the code, eliminating hallucinations.
-
-### 2. AI Coding Context Pack (The Differentiator)
-* **Safety Guardrails:** A compressed artifact that tells AI tools what they *cannot* break (system invariants, public contracts).
-* **Global Awareness:** Provides AI agents with the "Senior Engineer's intuition" without needing to ingest the entire multi-GB codebase.
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+  [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+  [![Status: Active Development](https://img.shields.io/badge/status-active_development-orange.svg)]()
+</div>
 
 ---
 
-## 🛠 Features
+## 📖 Overview
+**RepoMentor** is a GenAI-driven, code-first platform that helps developers and AI coding tools understand, navigate, and safely work within unfamiliar codebases.
 
-* **🔍 AST-Level Analysis:** Goes beyond text to understand actual code relationships and dependencies.
-* **🤖 Multi-Agent Orchestration:** Uses the **Model Context Protocol (MCP)** to coordinate specialized agents (Repo Mapper, Context Builder, etc.).
-* **🚫 Zero-Trust Documentation:** Ignores potentially outdated READMEs or comments; if it's not in the code, RepoMentor doesn't claim it as truth.
-* **💬 Interactive Mentorship:** Natural language queries like *"Where does user input validation happen?"* provide instant, cited answers.
+By treating **source code as the single source of truth**, RepoMentor analyzes repositories directly—rather than relying on READMEs or manually maintained documentation—to generate:
+
+* 📚 **Human-readable documentation** and explanations for fast onboarding and comprehension.
+* 🤖 **Compressed, machine-consumable context** that enables AI coding tools to make changes without breaking system-wide invariants.
+
+RepoMentor is designed to ensure that a developer joining today can understand the system quickly, and an AI coding tool operating locally has enough global context to behave like a senior engineer.
+
+---
+
+## ⚠️ The Problem
+Modern software development faces a growing documentation and safety gap:
+
+* **Rapid Development** – AI tools enable faster code generation than teams can understand.
+* **Documentation Debt** – Documentation is frequently missing, outdated, or inconsistent.
+* **Onboarding Friction** – New developers spend weeks understanding large codebases.
+* **Knowledge Silos** – Senior engineers become implicit documentation providers.
+* **Unsafe AI Coding** – AI tools lack global context and unknowingly violate architectural constraints.
+
+> Most tools today focus on either **explaining code** or **writing code**, but rarely both — and almost never safely.
+
+---
+
+## 💡 Our Solution
+RepoMentor acts as an **always-available, code-aware mentor** that derives understanding directly from the codebase.
+
+### Human Knowledge Layer
+* On-demand documentation generated from code.
+* Architecture and dependency explanations.
+* Function-level, block-level, and line-by-line walkthroughs.
+* Conversational Q&A strictly grounded in source code.
+
+### AI Coding Context Layer
+* A compressed, enforceable context artifact for AI coding tools.
+* Encodes system invariants, public contracts, dependencies, and high-risk zones.
+* Enables safe “vibe coding” without loading the entire repository.
+
+**Note:** RepoMentor **does not trust** READMEs, wikis, or markdown files as inputs. Documentation and AI context are generated outputs, always consistent with the actual code.
+
+---
+
+## 🎯 Core Design Philosophy
+**Code is truth.** Documentation and AI context are derived artifacts.
+
+| Aspect | RepoMentor Approach |
+| :--- | :--- |
+| **Trust Source** | ❌ Does not rely on README files or comments as authoritative sources |
+| **Repository Impact** | ❌ Does not mutate or modify repositories |
+| **Analysis Method** | ✅ Performs AST-level and structural analysis of source code |
+| **Syncing** | ✅ Keeps human documentation and AI context always in sync |
+
+---
+
+## ✨ Features
+
+### 📚 Intelligent Documentation Generation
+* **File-Level Summaries** – Responsibilities and intent of each module.
+* **Dependency Analysis** – How files and components interact.
+* **Architecture Overviews** – Inferred system design and structure.
+* **Onboarding Guides** – End-to-end explanations for new developers.
+
+### 🔍 Deep Code Comprehension
+* **Function Walkthroughs** – Step-by-step logic breakdowns.
+* **Block-Level Analysis** – Logical grouping explanations.
+* **Adaptive Depth** – Beginner-friendly to expert-level explanations.
+
+### 💬 Conversational Interface
+Ask natural-language questions about your codebase:
+* *"What does this authentication module do?"*
+* *"Why is Redis used in the caching layer?"*
+* *"How do these services communicate?"*
 
 ---
 
 ## 🏗 Architecture
 
-RepoMentor utilizes a sophisticated pipeline to ensure consistency between human explanations and AI context.
+
 
 ```mermaid
 graph TD
-    A[Source Codebase] --> B[Ingestion & AST Parsing]
-    B --> C[Structural & Semantic Analysis]
-    C --> D{RepoMentor Knowledge Core}
-    D --> E[📚 Human Documentation Layer]
-    D --> F[🤖 AI Coding Context Pack]
-    style D fill:#f96,stroke:#333,stroke-width:2px
-Tech Stack
-Language: Python 3.10+
-
-Frameworks: FastAPI, Pydantic
-
-AI/ML: OpenAI API, RAG, Semantic Embeddings
-
-Orchestration: Model Context Protocol (MCP)
-
-Vector DB: FAISS / Chroma
-
-🏁 Getting Started
-Warning: RepoMentor is currently in Active Development. Features are being rolled out weekly.
-
-Prerequisites
-
-Python 3.10+
-
-Git
-
-OpenAI API Key
-
-Installation
-
-Clone the repository
-Bash
-git clone [https://github.com/yourusername/repomentor.git](https://github.com/yourusername/repomentor.git)
-cd repomentor
-
-Set up environment
-
-Bash
-pip install -r requirements.txt
-cp .env.example .env # Add your API Key here
-Run the analysis
-
-Bash
-python main.py
-🎯 Use Cases
-Onboarding: New hires go from "cloning" to "contributing" in days, not weeks.
-
-Legacy Systems: Understand the "why" behind complex, undocumented codebases.
-
-Safe AI Development: Enable junior developers or AI agents to work on sensitive modules with automated guardrails.
-
-🤝 Contributing
-We value clear code and thoughtful engineering. To contribute:
-
-Fork the project.
-
-Create your Feature Branch (git checkout -b feature/AmazingFeature).
-
-Commit your changes.
-
-Push to the Branch.
-
-Open a Pull Request.
-
-📜 License
-Distributed under the MIT License. See LICENSE for more information.
-
-<div align="center"> <sub>Built with ❤️ by developers, for developers.</sub> </div>
+  Codebase --> Ingestion[Repo Ingestion & AST Parsing]
+  Ingestion --> Analysis[Structural & Semantic Analysis]
+  Analysis --> Core{RepoMentor Knowledge Core}
+  Core --> HumanDocs[Human Documentation Layer]
+  Core --> AIContext[AI Coding Context Pack]
