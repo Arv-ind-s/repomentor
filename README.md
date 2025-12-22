@@ -1,372 +1,112 @@
-# 🧠 RepoMentor
+# RepoMentor 🧠📚
 
-### AI-Powered Code Intelligence for Modern Development Teams
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)](https://fastapi.tiangolo.com/)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Status: Active Development](https://img.shields.io/badge/status-active_development-orange.svg)]()
+
+**Making every codebase understandable — for humans and AI.**
+
+RepoMentor is a GenAI-driven platform that treats source code as the single source of truth. It analyzes your repository's structure and logic (via AST) to generate high-fidelity documentation for developers and safety-first context for AI coding tools.
+
+[The Problem](#the-problem) • [Key Features](#key-features) • [Architecture](#architecture) • [Getting Started](#getting-started) • [Use Cases](#use-cases)
 
 ---
 
-## 🚀 What is RepoMentor?
+## 🚀 The Core Innovation: Two-Layer Understanding
 
-RepoMentor is a **GenAI-driven code analysis platform** that transforms any codebase into an intelligent, queryable knowledge base. By treating your source code as the single source of truth, RepoMentor generates:
+Unlike tools that simply summarize files, RepoMentor builds a **Knowledge Core** directly from code structure to serve two distinct audiences:
 
-- 📚 **Human-readable documentation** - Architecture overviews, API references, and deep code explanations
-- 🤖 **AI-ready context packs** - Compressed, structured code context for safe AI-assisted development
+### 1. Human Knowledge Layer
+* **On-Demand Docs:** Fresh documentation that never goes out of date.
+* **Multi-Level Walkthroughs:** Explanations ranging from high-level architecture to line-by-line logic.
+* **Grounded Q&A:** A conversational interface that answers questions based *only* on the code, eliminating hallucinations.
 
-**No outdated READMEs. No manual documentation. Just your code, intelligently analyzed.**
-
----
-
-## ✨ Key Features
-
-### 🔍 **Intelligent Code Analysis**
-- Multi-language AST parsing (Python, JavaScript, TypeScript, Java, Go, and more)
-- Semantic code chunking at file, class, function, and block levels
-- Automatic dependency graph extraction and call flow analysis
-
-### 🎯 **Context-Aware Explanations**
-- Adaptive depth: from 10,000-foot architecture views to line-by-line breakdowns
-- Natural language queries: "How does authentication work?" → precise, cited answers
-- Grounded responses with file paths and line number citations
-
-### 🛡️ **Safe AI-Assisted Development**
-- Read-only, non-invasive analysis (no code execution)
-- Hallucination prevention through strict source code grounding
-- Token-optimized context packs for AI coding tools
-
-### ⚡ **Production-Ready Architecture**
-- Multi-agent system with MCP orchestration
-- Vector database-backed semantic search (FAISS/ChromaDB)
-- Intelligent caching for sub-second response times
-- Stateless API design for horizontal scaling
+### 2. AI Coding Context Pack (The Differentiator)
+* **Safety Guardrails:** A compressed artifact that tells AI tools what they *cannot* break (system invariants, public contracts).
+* **Global Awareness:** Provides AI agents with the "Senior Engineer's intuition" without needing to ingest the entire multi-GB codebase.
 
 ---
 
-## 🎯 Use Cases
+## 🛠 Features
 
-| Scenario | How RepoMentor Helps |
-|----------|---------------------|
-| **Onboarding New Developers** | Generate instant architecture docs and guided code tours |
-| **Legacy Code Maintenance** | Understand undocumented systems through AI-powered analysis |
-| **Code Review Assistance** | Get context on changed files and their dependencies |
-| **AI Coding Tools** | Provide safe, scoped context to Copilot/ChatGPT/Claude |
-| **Technical Documentation** | Auto-generate and maintain API docs from source code |
-| **Architectural Planning** | Visualize dependencies and identify refactoring opportunities |
+* **🔍 AST-Level Analysis:** Goes beyond text to understand actual code relationships and dependencies.
+* **🤖 Multi-Agent Orchestration:** Uses the **Model Context Protocol (MCP)** to coordinate specialized agents (Repo Mapper, Context Builder, etc.).
+* **🚫 Zero-Trust Documentation:** Ignores potentially outdated READMEs or comments; if it's not in the code, RepoMentor doesn't claim it as truth.
+* **💬 Interactive Mentorship:** Natural language queries like *"Where does user input validation happen?"* provide instant, cited answers.
 
 ---
 
-## 🏗️ Architecture Overview
+## 🏗 Architecture
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     User Query Interface                     │
-│            (API / CLI / IDE Plugin / Web Dashboard)          │
-└─────────────────────┬───────────────────────────────────────┘
-                      │
-                      ▼
-┌─────────────────────────────────────────────────────────────┐
-│                  MCP Agent Orchestrator                      │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐      │
-│  │ Mapper   │ │Retrieval │ │ Explainer│ │ Context  │      │
-│  │ Agent    │ │ Agent    │ │ Agent    │ │ Builder  │      │
-│  └──────────┘ └──────────┘ └──────────┘ └──────────┘      │
-└─────────────────────┬───────────────────────────────────────┘
-                      │
-                      ▼
-┌─────────────────────────────────────────────────────────────┐
-│              RAG Pipeline + Vector Database                  │
-│   ┌────────────┐        ┌────────────┐                      │
-│   │  AST       │───────▶│  Semantic  │                      │
-│   │  Parser    │        │  Chunking  │                      │
-│   └────────────┘        └────────────┘                      │
-│          │                     │                             │
-│          ▼                     ▼                             │
-│   ┌────────────┐        ┌────────────┐                      │
-│   │Dependency  │        │  Vector    │                      │
-│   │Graph       │        │ Embeddings │                      │
-│   └────────────┘        └────────────┘                      │
-└─────────────────────┬───────────────────────────────────────┘
-                      │
-                      ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    Source Repository                         │
-│              (Git Remote or Local Filesystem)                │
-└─────────────────────────────────────────────────────────────┘
-```
+RepoMentor utilizes a sophisticated pipeline to ensure consistency between human explanations and AI context.
 
-### Multi-Agent System
+```mermaid
+graph TD
+    A[Source Codebase] --> B[Ingestion & AST Parsing]
+    B --> C[Structural & Semantic Analysis]
+    C --> D{RepoMentor Knowledge Core}
+    D --> E[📚 Human Documentation Layer]
+    D --> F[🤖 AI Coding Context Pack]
+    style D fill:#f96,stroke:#333,stroke-width:2px
+Tech Stack
+Language: Python 3.10+
 
-RepoMentor employs specialized agents coordinated via Model Context Protocol (MCP):
+Frameworks: FastAPI, Pydantic
 
-- **Repository Mapper**: Builds structural overview and dependency graphs
-- **Semantic Retrieval**: Finds relevant code chunks via vector similarity
-- **Deep Explainer**: Generates detailed, context-aware explanations
-- **Context Pack Builder**: Creates token-optimized AI tool inputs
-- **Cache Manager**: Optimizes performance through intelligent caching
+AI/ML: OpenAI API, RAG, Semantic Embeddings
 
----
+Orchestration: Model Context Protocol (MCP)
 
-## 🚀 Quick Start
+Vector DB: FAISS / Chroma
 
-### Prerequisites
+🏁 Getting Started
+Warning: RepoMentor is currently in Active Development. Features are being rolled out weekly.
 
-```bash
+Prerequisites
+
 Python 3.10+
+
 Git
-OpenAI API key (or compatible LLM endpoint)
-```
 
-### Installation
+OpenAI API Key
 
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/repomentor.git
+Installation
+
+Clone the repository
+Bash
+git clone [https://github.com/yourusername/repomentor.git](https://github.com/yourusername/repomentor.git)
 cd repomentor
 
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+Set up environment
 
-# Install dependencies
+Bash
 pip install -r requirements.txt
+cp .env.example .env # Add your API Key here
+Run the analysis
 
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your OpenAI API key
-```
+Bash
+python main.py
+🎯 Use Cases
+Onboarding: New hires go from "cloning" to "contributing" in days, not weeks.
 
-### Basic Usage
+Legacy Systems: Understand the "why" behind complex, undocumented codebases.
 
-```bash
-# Start the API server
-uvicorn app.main:app --reload
+Safe AI Development: Enable junior developers or AI agents to work on sensitive modules with automated guardrails.
 
-# In another terminal, analyze a repository
-curl -X POST "http://localhost:8000/api/v1/repositories" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "repo_url": "https://github.com/example/project",
-    "name": "example-project"
-  }'
+🤝 Contributing
+We value clear code and thoughtful engineering. To contribute:
 
-# Query the codebase
-curl -X POST "http://localhost:8000/api/v1/query" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "repo_id": "example-project",
-    "query": "How does authentication work?",
-    "depth": "detailed"
-  }'
-```
+Fork the project.
 
-### Python SDK Example
+Create your Feature Branch (git checkout -b feature/AmazingFeature).
 
-```python
-from repomentor import RepoMentor
+Commit your changes.
 
-# Initialize client
-mentor = RepoMentor(api_key="your-openai-key")
+Push to the Branch.
 
-# Analyze a repository
-repo = mentor.analyze_repository(
-    path="/path/to/local/repo",
-    name="my-project"
-)
+Open a Pull Request.
 
-# Ask questions
-response = mentor.query(
-    repo_id="my-project",
-    query="Explain the main data flow",
-    depth="architectural"
-)
+📜 License
+Distributed under the MIT License. See LICENSE for more information.
 
-print(response.explanation)
-print(f"Sources: {response.citations}")
-
-# Generate context pack for AI tools
-context_pack = mentor.generate_context_pack(
-    repo_id="my-project",
-    scope=["src/auth", "src/api"],
-    max_tokens=4000
-)
-```
-
----
-
-## 📊 API Reference
-
-### Core Endpoints
-
-#### Analyze Repository
-```http
-POST /api/v1/repositories
-Content-Type: application/json
-
-{
-  "repo_url": "https://github.com/user/repo",
-  "name": "unique-repo-id",
-  "branch": "main"  // optional
-}
-```
-
-#### Query Codebase
-```http
-POST /api/v1/query
-Content-Type: application/json
-
-{
-  "repo_id": "unique-repo-id",
-  "query": "How does the payment processing work?",
-  "depth": "detailed",  // "architectural" | "detailed" | "line-by-line"
-  "max_chunks": 10
-}
-```
-
-#### Generate Context Pack
-```http
-POST /api/v1/context-pack
-Content-Type: application/json
-
-{
-  "repo_id": "unique-repo-id",
-  "scope": ["src/auth", "src/api"],
-  "max_tokens": 4000,
-  "format": "json"  // "json" | "yaml"
-}
-```
-
-Full API documentation available at `http://localhost:8000/docs` when server is running.
-
----
-
-## 🛠️ Configuration
-
-### Environment Variables
-
-```bash
-# LLM Configuration
-OPENAI_API_KEY=sk-...
-OPENAI_MODEL=gpt-4-turbo-preview
-EMBEDDING_MODEL=text-embedding-3-small
-
-# Vector Database
-VECTOR_DB_TYPE=faiss  # faiss | chroma
-VECTOR_DB_PATH=./data/vectors
-
-# Performance
-CACHE_ENABLED=true
-CACHE_TTL=3600
-MAX_WORKERS=4
-
-# Security
-READ_ONLY_MODE=true
-ALLOWED_EXTENSIONS=.py,.js,.ts,.java,.go
-```
-
-### Advanced Configuration
-
-```yaml
-# config.yaml
-analysis:
-  chunk_size: 512
-  chunk_overlap: 50
-  languages: [python, javascript, typescript, java, go]
-  
-agents:
-  retrieval:
-    top_k: 5
-    similarity_threshold: 0.7
-  explainer:
-    max_tokens: 2000
-    temperature: 0.3
-    
-cache:
-  type: redis  # memory | redis
-  host: localhost
-  port: 6379
-```
-
----
-
-## 🧪 Development
-
-### Running Tests
-
-```bash
-# Unit tests
-pytest tests/unit
-
-# Integration tests
-pytest tests/integration
-
-# Coverage report
-pytest --cov=app tests/
-```
-
-### Code Quality
-
-```bash
-# Format code
-black app/ tests/
-
-# Linting
-ruff check app/ tests/
-
-# Type checking
-mypy app/
-```
-
-### Building Documentation
-
-```bash
-cd docs
-mkdocs serve
-```
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-### Development Setup
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Make your changes and add tests
-4. Ensure all tests pass: `pytest`
-5. Commit your changes: `git commit -m 'Add amazing feature'`
-6. Push to the branch: `git push origin feature/amazing-feature`
-7. Open a Pull Request
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- Built with [FastAPI](https://fastapi.tiangolo.com/), [LangChain](https://www.langchain.com/), and [Tree-sitter](https://tree-sitter.github.io/tree-sitter/)
-- Inspired by the need for better code comprehension tools in modern development workflows
-- Special thanks to the open-source community for foundational technologies
-
----
-
-## 🌟 Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/repomentor&type=Date)](https://star-history.com/#yourusername/repomentor&Date)
-
----
-
-<div align="center">
-
-**Made with ❤️ by a developer, for developers**
-
-
-</div>
+<div align="center"> <sub>Built with ❤️ by developers, for developers.</sub> </div>
